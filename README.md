@@ -1,10 +1,22 @@
-# Google Book API check
-Checking the Google Books API with a React app using TypeScript, Material-UI and React Router
+# Google [Book API](https://developers.google.com/books/docs/v1/using#WorkingVolumes) check
+
+Checking the Google Books API with a React app using [React Hooks](https://reactjs.org/docs/hooks-intro.html), [TypeScript](https://www.typescriptlang.org/), [Material-UI](https://mui.com/), [React Context](https://reactjs.org/docs/context.html) and [React Router](https://reactrouter.com/). 
+
+This project was first created by the following scripts:
 
 ### `npx create-react-app google-book-api-check --template typescript `
 ### `yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material`
 
+There are additional packages that were added to this project, as you can see in the `package.json` file.
 
+
+## Release notes 
+
+There is still a problem getting the results by the API, with and without an API key, so for now the response for all the requests is the same mock data, which is located in the `mockQueryBookResponseData.ts` file. 
+
+
+
+# ---
 
 # Getting Started with Create React App
 
