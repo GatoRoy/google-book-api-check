@@ -1,5 +1,9 @@
 # Google Book API check
-Checking the Google Books API with a React app
+Checking the Google Books API with a React app using TypeScript, Material-UI and React Router
+
+### `npx create-react-app google-book-api-check --template typescript `
+### `yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material`
+
 
 
 # Getting Started with Create React App
