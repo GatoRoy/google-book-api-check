@@ -1,6 +1,11 @@
 import { FC } from 'react';
 import { IBookResult, ISearchSummaryResponse } from './api/apiTypes';
 
+export interface IAppController {
+  isLoggedIn: boolean;
+  setIfLoggedIn: (isLoggedIn: boolean) => void;
+}
+
 export interface IBookSearchData {
   searchTerm: string;
   searchSummary?: ISearchSummaryResponse;
@@ -11,19 +16,21 @@ export interface IBookSearchData {
 }
 
 export interface IBookSearchController extends IBookSearchData {
-  pageRoutes: IRoute[];
   setSearchTerm: (newSearchTerm: string) => void;
   setSelectedPage: (pageToSelect?: number) => void;
-  setSelectedBookId: (bookToSelect?: string) => void;
+  setSelectedBook: (bookToSelect?: string) => void;
 }
 
 export interface IRoute {
   key: string;
   title: string;
   path: string;
-  enabled: boolean;
-  inHeader: boolean;
   component: FC<{}>;
+  enabled: boolean;
+}
+
+export interface IPageRoute extends IRoute {
+  inHeader: boolean;
 }
 
 export interface IListItemData {

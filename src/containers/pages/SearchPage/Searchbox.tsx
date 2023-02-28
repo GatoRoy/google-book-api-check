@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useBookSearch } from 'store/Context';
+import { useBookSearch } from 'store/hooks/UseBookSearch/Context';
 import { Textbox } from 'components/controls/Textbox';
 
 export const Searchbox: FC = () => {

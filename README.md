@@ -16,7 +16,7 @@ There is still a problem getting the results by the API, with and without an API
 
 
 
-# ---
+# 
 
 # Getting Started with Create React App
 

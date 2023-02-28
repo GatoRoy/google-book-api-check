@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { IBookSearchController } from './types';
+import { IBookSearchController } from 'store/types';
 
 interface IBookSearchContext extends IBookSearchController {}
 

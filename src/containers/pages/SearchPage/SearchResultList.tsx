@@ -1,21 +1,15 @@
 import React, { FC } from 'react';
-import { useBookSearch } from 'store/Context';
+import { useBookSearch } from 'store/hooks/UseBookSearch/Context';
 import { IListItemData } from 'store/types';
 import { List } from 'components/List';
 import { Pagination } from 'components/controls/Pagination';
-import { useNavigate } from 'react-router-dom';
 
 export const SearchResultList: FC = () => {
-  const { setSelectedPage, searchResultData, setSelectedBookId } =
+  const { setSelectedPage, searchResultData, setSelectedBook } =
     useBookSearch();
-  const navigate = useNavigate();
 
   const onBookClicked = (bookData: IListItemData) => {
-    //setting the id of the specified book as the selected book id
-    setSelectedBookId(bookData.id);
-
-    //navigating to the book-details page
-    navigate('/book');
+    setSelectedBook(bookData.id);
   };
 
   return (

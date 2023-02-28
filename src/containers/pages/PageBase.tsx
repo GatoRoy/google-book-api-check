@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren, ReactElement } from 'react';
-import { Typography } from 'components/controls/Typography';
-import { StyledPageBase, StyledPageBaseBody, StyledPageRow } from './styled';
+import { PageHeader } from './PageHeader';
+import { StyledPageBase, StyledPageBaseBody } from './styled';
 
 export interface PageBaseProps extends PropsWithChildren<{}> {
   className?: string;
@@ -19,17 +19,5 @@ export const PageBase: FC<PageBaseProps> = ({
         {children}
       </StyledPageBaseBody>
     </StyledPageBase>
-  );
-};
-
-interface PageHeaderProps {
-  headline: string;
-}
-
-const PageHeader: FC<PageHeaderProps> = ({ headline }) => {
-  return (
-    <StyledPageRow>
-      <Typography variant="h3">{headline}</Typography>
-    </StyledPageRow>
   );
 };

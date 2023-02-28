@@ -1,21 +1,18 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import {
   IBookSearchData,
   IBookSearchController,
-  IRoute,
   IBookData,
   IBookList,
-} from './types';
-import { ISearchSummaryResponse } from './api/apiTypes';
-import { NUMBER_OF_LIST_ITEMS_PER_PAGE } from './constants';
-import { appRoutes } from '../appRoutes';
-import apiGoogleBooks from './api/apiGoogleBooks';
+} from 'store/types';
+import { ISearchSummaryResponse, IBookResult } from 'store/api/apiTypes';
+import { NUMBER_OF_LIST_ITEMS_PER_PAGE } from 'store/constants';
+import apiGoogleBooks from 'store/api/apiGoogleBooks';
 
 export const useBookSearchController = (): IBookSearchController => {
-  const pageRoutes: IRoute[] = appRoutes.filter(
-    page => page.enabled && page.inHeader,
-  );
+  const navigate = useNavigate();
 
   const [searchData, setSearchData] = useImmer<IBookSearchData>({
     searchTerm: '',
@@ -30,6 +27,18 @@ export const useBookSearchController = (): IBookSearchController => {
     selectedBook: undefined,
   });
 
+  const convertBookResultToBookData = (book: IBookResult): IBookData => {
+    return {
+      id: book.id,
+      type: book.kind,
+      title: book.volumeInfo.title,
+      description: book.volumeInfo.description,
+      imageName: book.volumeInfo.authors.join(', '),
+      imageFilePath: book.volumeInfo.imageLinks.smallThumbnail,
+      extendedData: book,
+    };
+  };
+
   const getSearchResultData = (
     searchSummary?: ISearchSummaryResponse,
   ): IBookList => {
@@ -41,18 +50,9 @@ export const useBookSearchController = (): IBookSearchController => {
       };
     }
 
-    const results: IBookData[] = searchSummary.items.map(book => {
-      return {
-        id: book.id,
-        name: book.volumeInfo.title,
-        type: book.kind,
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description,
-        imageName: book.volumeInfo.authors.join(', '),
-        imageFilePath: book.volumeInfo.imageLinks.smallThumbnail,
-        extendedData: book,
-      };
-    });
+    const results: IBookData[] = searchSummary.items.map(
+      convertBookResultToBookData,
+    );
     return {
       totalCount: searchSummary.totalItems,
       currentItems: results,
@@ -87,6 +87,18 @@ export const useBookSearchController = (): IBookSearchController => {
     );
   };
 
+  const loadBook = (): Promise<IBookResult> => {
+    const { selectedBookId } = searchData;
+
+    if (!selectedBookId) {
+      return new Promise<IBookResult>((resolve, reject) => {
+        reject('Invalid book id');
+      });
+    }
+
+    return apiGoogleBooks.loadBookVolume(selectedBookId);
+  };
+
   const setSearchTerm = (newSearchTerm: string) => {
     setSearchData((draft: IBookSearchData) => {
       draft.searchTerm = newSearchTerm;
@@ -99,13 +111,10 @@ export const useBookSearchController = (): IBookSearchController => {
     });
   };
 
-  const setSelectedBookId = (bookId?: string) => {
+  const setSelectedBook = (bookId?: string) => {
     setSearchData((draft: IBookSearchData) => {
+      //setting the selected book id
       draft.selectedBookId = bookId;
-
-      const { currentItems } = draft.searchResultData;
-      draft.selectedBook =
-        currentItems && currentItems.find(book => book.id === bookId);
     });
   };
 
@@ -122,11 +131,47 @@ export const useBookSearchController = (): IBookSearchController => {
     [searchData.searchTerm, searchData.selectedPage],
   );
 
+  useEffect(
+    () => {
+      const { selectedBookId } = searchData;
+
+      if (selectedBookId) {
+        loadBook()
+          //getting the book data by the response
+          .then(bookResponse => {
+            setSearchData((draft: IBookSearchData) => {
+              //setting the selected book
+              draft.selectedBook = convertBookResultToBookData(bookResponse);
+
+              //navigating to the book-details page
+              navigate(`books/${selectedBookId}`);
+            });
+          })
+          //otherwise, getting the book data from the current search results
+          .catch(err => {
+            setSearchData((draft: IBookSearchData) => {
+              //getting the selected book by its id
+              const { currentItems } = draft.searchResultData;
+
+              //setting the selected book
+              draft.selectedBook =
+                currentItems &&
+                currentItems.find(book => book.id === selectedBookId);
+
+              //navigating to the book-details page
+              navigate(`books/${selectedBookId}`);
+            });
+          });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [searchData.selectedBookId],
+  );
+
   return {
-    pageRoutes,
     ...searchData,
     setSearchTerm,
     setSelectedPage,
-    setSelectedBookId,
+    setSelectedBook,
   };
 };
