@@ -1,4 +1,4 @@
-# Google [Book API](https://developers.google.com/books/docs/v1/using#WorkingVolumes) check
+# [Google Book API](https://developers.google.com/books/docs/v1/using#WorkingVolumes) check
 
 Checking the Google Books API with a React app using [React Hooks](https://reactjs.org/docs/hooks-intro.html), [TypeScript](https://www.typescriptlang.org/), [Material-UI](https://mui.com/), [React Context](https://reactjs.org/docs/context.html) and [React Router](https://reactrouter.com/). 
 
