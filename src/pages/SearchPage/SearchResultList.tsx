@@ -15,7 +15,7 @@ export const SearchResultList: FC = () => {
     setSelectedBookId(bookData.id);
 
     //navigating to the book-details page
-    navigate('/book');
+    navigate(`/books/${bookData.id}`);
   };
 
   return (

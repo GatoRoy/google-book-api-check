@@ -9,11 +9,11 @@ import {
 } from './types';
 import { ISearchSummaryResponse } from './api/apiTypes';
 import { NUMBER_OF_LIST_ITEMS_PER_PAGE } from './constants';
-import { appRoutes } from '../appRoutes';
+import { appPageRoutes } from 'appRoutes';
 import apiGoogleBooks from './api/apiGoogleBooks';
 
 export const useBookSearchController = (): IBookSearchController => {
-  const pageRoutes: IRoute[] = appRoutes.filter(
+  const pageRoutes: IRoute[] = appPageRoutes.filter(
     page => page.enabled && page.inHeader,
   );
 

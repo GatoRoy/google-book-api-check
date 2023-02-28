@@ -1,31 +1,42 @@
-import { IRoute } from 'store/types';
+import { IRoute, IPageRoute } from 'store/types';
+import MainLayout from 'containers/MainLayout';
 import SearchPage from 'pages/SearchPage';
 import BookDetailsPage from 'pages/BookDetailsPage';
 import FavoritesPage from 'pages/FavoritesPage';
 
-export const appRoutes: IRoute[] = [
+export const appMainRoutes: IRoute[] = [
+  {
+    key: 'layout-route',
+    title: 'Main',
+    path: '/*',
+    component: MainLayout,
+    enabled: true,
+  },
+];
+
+export const appPageRoutes: IPageRoute[] = [
+  {
+    key: 'book-details-route',
+    title: 'Book Details',
+    path: 'books/:id',
+    inHeader: false,
+    component: BookDetailsPage,
+    enabled: true,
+  },
   {
     key: 'search-route',
     title: 'Search',
     path: '/',
-    enabled: true,
     inHeader: true,
     component: SearchPage,
-  },
-  {
-    key: 'book-details-route',
-    title: 'Book Details',
-    path: '/book',
     enabled: true,
-    inHeader: false,
-    component: BookDetailsPage,
   },
   {
     key: 'favorites-route',
     title: 'Favorites',
-    path: '/favorites',
-    enabled: true,
+    path: 'favorites/',
     inHeader: true,
     component: FavoritesPage,
+    enabled: true,
   },
 ];

@@ -10,11 +10,9 @@ import {
 import { Global } from '@emotion/react';
 import { getAppTheme } from 'styles/theme';
 import { globalStyles } from 'styles/globalStyles';
-import { appRoutes } from './appRoutes';
+import { appMainRoutes } from './appRoutes';
 import { BookSearchContext } from 'store/Context';
 import { useBookSearchController } from 'store/controller';
-import Navbar from 'components/Navbar';
-import Footer from 'components/Footer';
 
 interface AppProps {
   mode?: PaletteMode;
@@ -31,9 +29,8 @@ const App = ({ mode = 'light' }: AppProps) => {
       <Box height="100vh" display="flex" flexDirection="column">
         <BrowserRouter>
           <BookSearchContext.Provider value={controller}>
-            <Navbar />
             <Routes>
-              {appRoutes.map(
+              {appMainRoutes.map(
                 route =>
                   route.enabled && (
                     <Route
@@ -44,7 +41,6 @@ const App = ({ mode = 'light' }: AppProps) => {
                   ),
               )}
             </Routes>
-            <Footer />
           </BookSearchContext.Provider>
         </BrowserRouter>
       </Box>
