@@ -18,7 +18,7 @@ export interface IBookSearchData {
 export interface IBookSearchController extends IBookSearchData {
   setSearchTerm: (newSearchTerm: string) => void;
   setSelectedPage: (pageToSelect?: number) => void;
-  setSelectedBookId: (bookToSelect?: string) => void;
+  setSelectedBook: (bookToSelect?: string) => void;
 }
 
 export interface IRoute {

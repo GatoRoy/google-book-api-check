@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import {
   IBookSearchData,
@@ -11,6 +12,8 @@ import { NUMBER_OF_LIST_ITEMS_PER_PAGE } from 'store/constants';
 import apiGoogleBooks from 'store/api/apiGoogleBooks';
 
 export const useBookSearchController = (): IBookSearchController => {
+  const navigate = useNavigate();
+
   const [searchData, setSearchData] = useImmer<IBookSearchData>({
     searchTerm: '',
     searchSummary: undefined,
@@ -93,13 +96,19 @@ export const useBookSearchController = (): IBookSearchController => {
     });
   };
 
-  const setSelectedBookId = (bookId?: string) => {
+  const setSelectedBook = (bookId?: string) => {
     setSearchData((draft: IBookSearchData) => {
+      //setting the selected book id
       draft.selectedBookId = bookId;
 
+      //getting the selected book by its id
       const { currentItems } = draft.searchResultData;
+      //setting the selected book
       draft.selectedBook =
         currentItems && currentItems.find(book => book.id === bookId);
+
+      //navigating to the book-details page
+      navigate(`books/${bookId}`);
     });
   };
 
@@ -120,6 +129,6 @@ export const useBookSearchController = (): IBookSearchController => {
     ...searchData,
     setSearchTerm,
     setSelectedPage,
-    setSelectedBookId,
+    setSelectedBook,
   };
 };
