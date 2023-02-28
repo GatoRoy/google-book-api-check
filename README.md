@@ -4,8 +4,8 @@ Checking the Google Books API with a React app using [React Hooks](https://react
 
 This project was first created by the following scripts:
 
-### `npx create-react-app google-book-api-check --template typescript `
-### `yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material`
+#### `npx create-react-app google-book-api-check --template typescript `
+#### `yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material`
 
 There are additional packages that were added to this project, as you can see in the `package.json` file.
 
