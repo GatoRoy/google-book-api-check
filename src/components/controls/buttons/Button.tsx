@@ -7,7 +7,13 @@ interface ButtonProps extends ClickableProps {}
 export const Button: FC<ButtonProps> = props => {
   const { children, onClick } = props;
   return (
-    <StyledButton {...props} size="large" color="inherit" onClick={onClick}>
+    <StyledButton
+      {...props}
+      variant="contained"
+      size="large"
+      color="primary"
+      onClick={onClick}
+    >
       {children}
     </StyledButton>
   );

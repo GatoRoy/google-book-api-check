@@ -1,10 +1,16 @@
 import { ElementType, PropsWithChildren } from 'react';
 import { Theme } from '@mui/material';
 import { SxProps, SystemProps } from '@mui/system';
+import { IPageRoute } from 'store/types';
 
 export interface BaseControlProps
   extends PropsWithChildren<SystemProps<Theme> & {}> {
   className?: string;
+  /**
+   * If `true`, the component is disabled.
+   * @default false
+   */
+  disabled?: boolean;
   /**
    * The component used for the root node.
    * Either a string to use a HTML element or a component.
@@ -19,4 +25,8 @@ export interface BaseControlProps
 
 export interface ClickableProps extends BaseControlProps {
   onClick: React.MouseEventHandler<HTMLElement>;
+}
+
+export interface NavProps extends BaseControlProps {
+  routes: IPageRoute[];
 }

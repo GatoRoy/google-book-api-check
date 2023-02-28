@@ -3,20 +3,14 @@ import { useImmer } from 'use-immer';
 import {
   IBookSearchData,
   IBookSearchController,
-  IRoute,
   IBookData,
   IBookList,
-} from './types';
-import { ISearchSummaryResponse } from './api/apiTypes';
-import { NUMBER_OF_LIST_ITEMS_PER_PAGE } from './constants';
-import { appPageRoutes } from 'appRoutes';
-import apiGoogleBooks from './api/apiGoogleBooks';
+} from 'store/types';
+import { ISearchSummaryResponse } from 'store/api/apiTypes';
+import { NUMBER_OF_LIST_ITEMS_PER_PAGE } from 'store/constants';
+import apiGoogleBooks from 'store/api/apiGoogleBooks';
 
 export const useBookSearchController = (): IBookSearchController => {
-  const pageRoutes: IRoute[] = appPageRoutes.filter(
-    page => page.enabled && page.inHeader,
-  );
-
   const [searchData, setSearchData] = useImmer<IBookSearchData>({
     searchTerm: '',
     searchSummary: undefined,
@@ -123,7 +117,6 @@ export const useBookSearchController = (): IBookSearchController => {
   );
 
   return {
-    pageRoutes,
     ...searchData,
     setSearchTerm,
     setSelectedPage,

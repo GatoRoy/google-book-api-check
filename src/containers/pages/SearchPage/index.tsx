@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { PageBase, PageBaseProps } from 'pages/PageBase';
-import { StyledPageRow } from 'pages/styled';
+import { PageBase, PageBaseProps } from 'containers/pages/PageBase';
+import { StyledPageRow } from '../styled';
 import { Searchbox } from './Searchbox';
 import { SearchResultList } from './SearchResultList';
 import { StyledSearchResultListWrapper } from './styled';

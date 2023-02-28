@@ -1,29 +1,29 @@
 import React, { FC, ReactElement } from 'react';
 import { Container, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useBookSearch } from 'store/Context';
+import { NavProps } from 'components/types';
 import { Box } from 'components/controls/Box';
 import { Typography } from 'components/controls/Typography';
 import { AppLink } from 'components/controls/Link';
 import { NavMenu } from './NavMenu';
 import { StyledNavbar, StyledWideNavbarBox } from './styled';
 
-const Navbar: FC = (): ReactElement => {
+interface NavbarProps extends NavProps {}
+
+const Navbar: FC<NavbarProps> = (props): ReactElement => {
   return (
     <StyledNavbar className="navigation-bar">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <WideNavbar />
-          <NarrowNavbar />
+          <WideNavbar {...props} />
+          <NarrowNavbar {...props} />
         </Toolbar>
       </Container>
     </StyledNavbar>
   );
 };
 
-const WideNavbar: FC = () => {
-  const { pageRoutes } = useBookSearch();
-
+const WideNavbar: FC<NavbarProps> = ({ routes }) => {
   return (
     <>
       <Typography
@@ -35,21 +35,24 @@ const WideNavbar: FC = () => {
       </Typography>
       <Box sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
         <StyledWideNavbarBox>
-          {pageRoutes.map(page => (
-            <AppLink key={page.key} path={page.path}>
-              {page.title}
-            </AppLink>
-          ))}
+          {routes.map(
+            page =>
+              page.inHeader && (
+                <AppLink key={page.key} path={page.path}>
+                  {page.title}
+                </AppLink>
+              ),
+          )}
         </StyledWideNavbarBox>
       </Box>
     </>
   );
 };
 
-const NarrowNavbar: FC = () => {
+const NarrowNavbar: FC<NavbarProps> = ({ routes }) => {
   return (
     <>
-      <NavMenu>
+      <NavMenu routes={routes}>
         <MenuIcon />
       </NavMenu>
       <Typography

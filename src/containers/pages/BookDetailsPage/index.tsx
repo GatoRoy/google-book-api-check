@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { PageBase, PageBaseProps } from 'pages/PageBase';
+import { IBookData } from 'store/types';
+import { useBookSearch } from 'store/hooks/UseBookSearch/Context';
+import { PageBase, PageBaseProps } from 'containers/pages/PageBase';
 import { Typography } from 'components/controls/Typography';
-import { useBookSearch } from '../../store/Context';
 import { Box } from 'components/controls/Box';
-import { IBookData } from '../../store/types';
 
 interface BookDetailsPageProps extends PageBaseProps {}
 

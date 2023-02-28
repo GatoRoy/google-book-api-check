@@ -1,19 +1,16 @@
 import React, { FC } from 'react';
 import { MenuItem as MuiMenuItem } from '@mui/material';
-import { useBookSearch } from 'store/Context';
-import { BaseControlProps } from 'components/types';
+import { NavProps } from 'components/types';
 import { Box } from 'components/controls/Box';
 import { IconButton } from 'components/controls/buttons/IconButton';
 import { AppLink } from 'components/controls/Link';
 import { Typography } from 'components/controls/Typography';
 import { StyledNavMenuPopover } from './styled';
 
-interface MenuProps extends BaseControlProps {}
+interface NavMenuProps extends NavProps {}
 
-export const NavMenu: FC<MenuProps> = props => {
-  const { children } = props;
-
-  const { pageRoutes } = useBookSearch();
+export const NavMenu: FC<NavMenuProps> = props => {
+  const { children, routes } = props;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -50,13 +47,16 @@ export const NavMenu: FC<MenuProps> = props => {
         open={Boolean(anchorEl)}
         onClose={onCloseMenu}
       >
-        {pageRoutes.map(page => (
-          <AppLink key={page.key} path={page.path}>
-            <MuiMenuItem onClick={onCloseMenu}>
-              <Typography textAlign="center">{page.title}</Typography>
-            </MuiMenuItem>
-          </AppLink>
-        ))}
+        {routes.map(
+          page =>
+            page.inHeader && (
+              <AppLink key={page.key} path={page.path}>
+                <MuiMenuItem onClick={onCloseMenu}>
+                  <Typography textAlign="center">{page.title}</Typography>
+                </MuiMenuItem>
+              </AppLink>
+            ),
+        )}
       </StyledNavMenuPopover>
     </Box>
   );

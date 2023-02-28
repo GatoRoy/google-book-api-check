@@ -1,6 +1,11 @@
 import { FC } from 'react';
 import { IBookResult, ISearchSummaryResponse } from './api/apiTypes';
 
+export interface IAppController {
+  isLoggedIn: boolean;
+  setIfLoggedIn: (isLoggedIn: boolean) => void;
+}
+
 export interface IBookSearchData {
   searchTerm: string;
   searchSummary?: ISearchSummaryResponse;
@@ -11,7 +16,6 @@ export interface IBookSearchData {
 }
 
 export interface IBookSearchController extends IBookSearchData {
-  pageRoutes: IRoute[];
   setSearchTerm: (newSearchTerm: string) => void;
   setSelectedPage: (pageToSelect?: number) => void;
   setSelectedBookId: (bookToSelect?: string) => void;
